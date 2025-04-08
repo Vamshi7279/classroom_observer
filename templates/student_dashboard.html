@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            padding: 20px;
+            background-color: #f4f6f8;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        .charts {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        canvas {
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        .logout {
+            margin-top: 30px;
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #e74c3c;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Welcome, {{ username }}</h2>
+    <p>Roll Number: {{ roll_number }}</p>
+    <p>Overall Performance: <strong>{{ "%.2f"|format(performance) }}%</strong></p>
+
+    <div class="charts">
+        <div>
+            <h3>Attendance Chart</h3>
+            <canvas id="attendanceChart"></canvas>
+        </div>
+
+        <div>
+            <h3>Marks Chart</h3>
+            <canvas id="marksChart"></canvas>
+        </div>
+    </div>
+
+    <a href="/logout" class="logout">Logout</a>
+
+    <script>
+        const attendanceData = {
+            labels: ['Present', 'Absent'],
+            datasets: [{
+                data: [{{ attendance }}, {{ 100 - attendance }}],
+                backgroundColor: ['#27ae60', '#e74c3c']
+            }]
+        };
+        new Chart(document.getElementById('attendanceChart'), {
+            type: 'pie',
+            data: attendanceData
+        });
+
+        const marksData = {
+            labels: ['Exam', 'Assignment', 'Participation'],
+            datasets: [{
+                label: 'Marks',
+                data: [{{ exam }}, {{ assignment }}, {{ participation }}],
+                backgroundColor: ['#3498db', '#9b59b6', '#f39c12']
+            }]
+        };
+        new Chart(document.getElementById('marksChart'), {
+            type: 'bar',
+            data: marksData,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
