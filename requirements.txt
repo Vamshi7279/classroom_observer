@@ -1,5 +1,6 @@
 Flask
-pandas
 face_recognition
-numpy
 opencv-python
+numpy
+pandas
+gunicorn
