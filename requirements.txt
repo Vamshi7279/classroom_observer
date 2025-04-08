@@ -1,0 +1,5 @@
+Flask
+pandas
+face_recognition
+numpy
+opencv-python
