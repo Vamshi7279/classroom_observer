@@ -1,5 +1,5 @@
 Flask
-face_recognition
+face-recognition
 opencv-python
 numpy
 pandas
